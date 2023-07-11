@@ -2,36 +2,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void){
+int main(int argc, char *argv[]){
     FILE* fptr = NULL;
-    char data[2];
-    int cmpt = 0;
-    char path[] = "ajc/file1.txt";
-    char* merge = NULL;
+    char c;
+    FILE* mergeptr = fopen("ajc/merge.txt", "w");
 
-    for( int i = 49;i < 51;i++){
-        path[8] = i;
-        fptr = fopen(path, "r");
+    for( int i = 1;i < argc;i++){
+        fptr = fopen(argv[i], "r");
         
-        while (fgets(data,2, fptr)){
-            merge = (char*)realloc(merge, sizeof(char) * cmpt);
-            strcat(merge,data);
-            cmpt ++ ;
+        while ( !((c = fgetc(fptr)) == EOF)){ 
+            fprintf(mergeptr,"%c",c);
         }
 
-        merge = (char*)realloc(merge, sizeof(char) * cmpt);
-        merge[cmpt] = ' ';
-        cmpt ++;
         fclose(fptr);
-
+        fputs(" ",mergeptr);
     }
-    merge[cmpt] = '\n';
-
-    fptr = fopen("ajc/merge.txt", "w");
-
-    fprintf(fptr,"%s",merge);
-
-    fclose(fptr); 
-
+    fputs("\n",mergeptr);
+    fclose(mergeptr);
     return 0;
 }
