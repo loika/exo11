@@ -27,7 +27,6 @@ int main(int argc, char *argv[]){
         }
 
         fclose(fptr);
-        fputs(" ",mergeptr);
     }
     fputs("\n",mergeptr);
     fclose(mergeptr);
